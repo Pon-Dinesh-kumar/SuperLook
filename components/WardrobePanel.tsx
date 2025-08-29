@@ -9,6 +9,7 @@ import ClothingPanel from './OutfitPanel';
 import ModificationsPanel from './AdjustmentPanel';
 import EffectsPanel from './FilterPanel';
 import EnvironmentPanel from './BackgroundPanel';
+import ActionsPanel from './ActionsPanel';
 
 interface WardrobePanelProps {
   activeCategory: Category;
@@ -17,6 +18,7 @@ interface WardrobePanelProps {
   onApplyModification: (prompt: string) => void;
   onApplyEffect: (prompt: string) => void;
   onApplyEnvironment: (prompt: string) => void;
+  onApplyAction: (prompt: string) => void;
   isLoading: boolean;
 }
 
@@ -28,6 +30,7 @@ const WardrobePanel: React.FC<WardrobePanelProps> = (props) => {
     { id: 'modifications', name: 'Modifications' },
     { id: 'effects', name: 'Effects' },
     { id: 'environment', name: 'Environment' },
+    { id: 'actions', name: 'Actions' },
   ];
 
   const renderActivePanel = () => {
@@ -40,6 +43,8 @@ const WardrobePanel: React.FC<WardrobePanelProps> = (props) => {
         return <EffectsPanel onApplyEffect={props.onApplyEffect} isLoading={isLoading} />;
       case 'environment':
         return <EnvironmentPanel onApplyEnvironment={props.onApplyEnvironment} isLoading={isLoading} />;
+      case 'actions':
+        return <ActionsPanel onApplyAction={props.onApplyAction} isLoading={isLoading} />;
       default:
         return null;
     }

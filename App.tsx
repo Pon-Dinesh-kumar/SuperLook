@@ -5,8 +5,8 @@
 
 
 import React, { useState, useCallback, useRef, useEffect } from 'react';
-// FIX: import removeImageBackground
-import { generateFilteredImage, generateAdjustedImage, generateOutfitImage, generateBackgroundImage, removeImageBackground } from './services/geminiService';
+// FIX: Fix typo in function name from `removeImagebackground` to `removeImageBackground`.
+import { generateFilteredImage, generateAdjustedImage, generateOutfitImage, generateBackgroundImage, removeImageBackground, generateActionImage } from './services/geminiService';
 import Header from './components/Header';
 import Spinner from './components/Spinner';
 import StartScreen from './components/StartScreen';
@@ -47,7 +47,7 @@ const getApiErrorMessage = (err: unknown, context: string): string => {
 }
 
 
-export type Category = 'clothing' | 'modifications' | 'effects' | 'environment';
+export type Category = 'clothing' | 'modifications' | 'effects' | 'environment' | 'actions';
 interface HistoryItem {
   file: File;
   backgroundUrl: string | null;
@@ -216,6 +216,27 @@ const App: React.FC = () => {
         setIsLoading(false);
     }
   }, [currentImage, addImageToHistory]);
+  
+  const handleApplyAction = useCallback(async (actionPrompt: string) => {
+    if (!currentImage) {
+      setError('No image loaded to apply an action to.');
+      return;
+    }
+    
+    setIsLoading(true);
+    setError(null);
+    
+    try {
+        const actionImageUrl = await generateActionImage(currentImage, actionPrompt);
+        const newImageFile = dataURLtoFile(actionImageUrl, `action-${Date.now()}.png`);
+        addImageToHistory(newImageFile);
+    } catch (err) {
+        setError(getApiErrorMessage(err, 'apply the action'));
+        console.error(err);
+    } finally {
+        setIsLoading(false);
+    }
+  }, [currentImage, addImageToHistory]);
 
   const handleReset = useCallback(() => {
     if (history.length > 0) {
@@ -335,6 +356,7 @@ const App: React.FC = () => {
               onApplyModification={handleApplyModification}
               onApplyEffect={handleApplyFilter}
               onApplyEnvironment={handleApplyEnvironment}
+              onApplyAction={handleApplyAction}
               isLoading={isLoading}
             />
         </div>

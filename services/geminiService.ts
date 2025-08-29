@@ -261,6 +261,46 @@ Output: Return ONLY the final edited image with the new background. Do not retur
 };
 
 /**
+ * Generates an image with a new pose using generative AI.
+ * @param originalImage The original image file.
+ * @param actionPrompt The text prompt describing the desired action/pose.
+ * @returns A promise that resolves to the data URL of the new image.
+ */
+export const generateActionImage = async (
+    originalImage: File,
+    actionPrompt: string,
+): Promise<string> => {
+    console.log(`Starting action generation: ${actionPrompt}`);
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY! });
+    
+    const originalImagePart = await fileToPart(originalImage);
+    const prompt = `You are an expert AI character artist. Your task is to change the pose of the character in the image based on the user's request.
+
+User Request: "Redraw the character in the following pose: ${actionPrompt}"
+
+Editing Guidelines:
+- Only change the character's pose.
+- The character's face, clothing, modifications, and the background environment must remain absolutely identical to the original image.
+- The new pose must look natural and physically plausible.
+
+Output: Return ONLY the final edited image with the new pose. Do not return text.`;
+    const textPart = { text: prompt };
+
+    console.log('Sending image and action prompt to the model...');
+    const response: GenerateContentResponse = await ai.models.generateContent({
+        model: 'gemini-2.5-flash-image-preview',
+        contents: { parts: [originalImagePart, textPart] },
+        config: {
+            responseModalities: [Modality.IMAGE, Modality.TEXT],
+        },
+    });
+    console.log('Received response from model for action.', response);
+    
+    return handleApiResponse(response, 'action');
+};
+
+
+/**
  * Removes the background from an image using generative AI.
  * @param originalImage The original image file.
  * @returns A promise that resolves to the data URL of the image with a transparent background.
