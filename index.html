@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SuperLook</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.1.0/",
+    "react": "https://esm.sh/react@^19.1.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.10.0",
+    "react-image-crop": "https://esm.sh/react-image-crop@^11.0.6"
+  }
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://esm.sh/react-image-crop@^11.0.6/dist/ReactCrop.css" />
+<style>
+:root {
+  --cyber-bg: #0a0f19;
+  --cyber-red: #f80243;
+  --cyber-cyan: #09fbd3;
+  --cyber-text: #d4d4d8;
+  --cyber-border: rgba(10, 251, 211, 0.2);
+  --cyber-border-active: rgba(10, 251, 211, 0.7);
+}
+body {
+    font-family: 'Exo 2', sans-serif;
+    background-color: var(--cyber-bg);
+    background-image: 
+        linear-gradient(var(--cyber-border) 1px, transparent 1px), 
+        linear-gradient(to right, var(--cyber-border) 1px, var(--cyber-bg) 1px);
+    background-size: 40px 40px;
+    background-position: -1px -1px;
+    color: var(--cyber-text);
+}
+.cyber-box {
+  background: rgba(10, 15, 25, 0.6);
+  border: 1px solid var(--cyber-border);
+  backdrop-filter: blur(10px);
+  position: relative;
+}
+.cyber-box::before, .cyber-box::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-style: solid;
+  border-color: var(--cyber-cyan);
+}
+.cyber-box::before {
+  top: -2px;
+  left: -2px;
+  border-width: 2px 0 0 2px;
+}
+.cyber-box::after {
+  bottom: -2px;
+  right: -2px;
+  border-width: 0 2px 2px 0;
+}
+.cyber-glitch {
+  animation: glitch 3s linear infinite;
+}
+@keyframes glitch{
+  2%,64%{
+    transform: translate(2px,0) skew(0deg);
+  }
+  4%,60%{
+    transform: translate(-2px,0) skew(0deg);
+  }
+  62%{
+    transform: translate(0,0) skew(5deg); 
+  }
+}
+</style>
+  <link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
