@@ -4,7 +4,7 @@
 */
 
 import React from 'react';
-import type { Category } from '../App';
+import type { Category, ThemeCategory } from '../App';
 import ClothingPanel from './OutfitPanel';
 import ModificationsPanel from './AdjustmentPanel';
 import EffectsPanel from './FilterPanel';
@@ -20,10 +20,11 @@ interface WardrobePanelProps {
   onApplyEnvironment: (prompt: string) => void;
   onApplyAction: (prompt: string) => void;
   isLoading: boolean;
+  themeCategory: ThemeCategory;
 }
 
 const WardrobePanel: React.FC<WardrobePanelProps> = (props) => {
-  const { activeCategory, setActiveCategory, isLoading } = props;
+  const { activeCategory, setActiveCategory, isLoading, themeCategory } = props;
 
   const categories: { id: Category, name: string }[] = [
     { id: 'clothing', name: 'Clothing' },
@@ -36,15 +37,15 @@ const WardrobePanel: React.FC<WardrobePanelProps> = (props) => {
   const renderActivePanel = () => {
     switch(activeCategory) {
       case 'clothing':
-        return <ClothingPanel onApplyOutfit={props.onApplyOutfit} isLoading={isLoading} />;
+        return <ClothingPanel onApplyOutfit={props.onApplyOutfit} isLoading={isLoading} presets={themeCategory.clothing} />;
       case 'modifications':
-        return <ModificationsPanel onApplyModification={props.onApplyModification} isLoading={isLoading} />;
+        return <ModificationsPanel onApplyModification={props.onApplyModification} isLoading={isLoading} presets={themeCategory.modifications} />;
       case 'effects':
-        return <EffectsPanel onApplyEffect={props.onApplyEffect} isLoading={isLoading} />;
+        return <EffectsPanel onApplyEffect={props.onApplyEffect} isLoading={isLoading} presets={themeCategory.effects} />;
       case 'environment':
-        return <EnvironmentPanel onApplyEnvironment={props.onApplyEnvironment} isLoading={isLoading} />;
+        return <EnvironmentPanel onApplyEnvironment={props.onApplyEnvironment} isLoading={isLoading} presets={themeCategory.environment} />;
       case 'actions':
-        return <ActionsPanel onApplyAction={props.onApplyAction} isLoading={isLoading} />;
+        return <ActionsPanel onApplyAction={props.onApplyAction} isLoading={isLoading} presets={themeCategory.actions} />;
       default:
         return null;
     }

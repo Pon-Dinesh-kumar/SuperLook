@@ -195,7 +195,6 @@ export const generateOutfitImage = async (
     console.log(`Starting outfit generation: ${outfitPrompt}`);
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY! });
     
-    // FIX: Corrected typo from `original` to `originalImage` and fixed syntax.
     const originalImagePart = await fileToPart(originalImage);
     const prompt = `You are a virtual fashion stylist AI specializing in futuristic and cyberpunk clothing. Your task is to realistically change the clothing on the person in the image.
 User Request: "Change my outfit to: a ${outfitPrompt}"
@@ -290,6 +289,7 @@ Output: Return ONLY the final edited image with the new pose. Do not return text
     const response: GenerateContentResponse = await ai.models.generateContent({
         model: 'gemini-2.5-flash-image-preview',
         contents: { parts: [originalImagePart, textPart] },
+        // FIX: Add config with responseModalities for image editing model.
         config: {
             responseModalities: [Modality.IMAGE, Modality.TEXT],
         },
@@ -325,6 +325,7 @@ Output: Return ONLY the final edited image with a transparent background. Do not
     const response: GenerateContentResponse = await ai.models.generateContent({
         model: 'gemini-2.5-flash-image-preview',
         contents: { parts: [originalImagePart, textPart] },
+        // FIX: Add config with responseModalities for image editing model.
         config: {
             responseModalities: [Modality.IMAGE, Modality.TEXT],
         },

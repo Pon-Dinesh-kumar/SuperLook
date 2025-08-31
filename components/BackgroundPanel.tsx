@@ -4,25 +4,16 @@
 */
 
 import React from 'react';
+import type { Preset } from '../App';
+
 
 interface EnvironmentPanelProps {
   onApplyEnvironment: (prompt: string) => void;
   isLoading: boolean;
+  presets: Preset[];
 }
 
-const EnvironmentPanel: React.FC<EnvironmentPanelProps> = ({ onApplyEnvironment, isLoading }) => {
-
-  const presets = [
-    { name: 'Neon Alley', prompt: 'a dark, rainy alley in a futuristic city, lit by vibrant neon signs', imageUrl: 'https://i.imgur.com/VUMx61N.png' },
-    { name: 'Spaceship Hangar', prompt: 'a vast, industrial spaceship hangar with a large vessel in the background', imageUrl: 'https://i.imgur.com/cFDJpA2.png' },
-    { name: 'Rooftop View', prompt: 'a high-rise rooftop overlooking a sprawling cyberpunk city at night', imageUrl: 'https://i.imgur.com/fJ3h4iG.png' },
-    { name: 'Desert Wasteland', prompt: 'a desolate, post-apocalyptic desert wasteland with a single sun', imageUrl: 'https://i.imgur.com/3g8h5pS.png' },
-    { name: 'Mega-Tower', prompt: 'the luxurious penthouse of a mega-tower, with floor-to-ceiling windows', imageUrl: 'https://i.imgur.com/2s4s5Jt.png' },
-    { name: 'Undercity Market', prompt: 'a crowded, bustling undercity market filled with strange vendors', imageUrl: 'https://i.imgur.com/sTqSgDB.jpeg' },
-    { name: 'Orbital Station', prompt: 'an orbital space station, with a view of the Earth below', imageUrl: 'https://i.imgur.com/7XyXR2q.png' },
-    { name: 'Bio-Dome Garden', prompt: 'a lush, synth-organic garden inside a massive bio-dome', imageUrl: 'https://i.imgur.com/5J3BCs5.png' },
-  ];
-  
+const EnvironmentPanel: React.FC<EnvironmentPanelProps> = ({ onApplyEnvironment, isLoading, presets }) => {
   return (
     <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 p-1 animate-fade-in">
       {presets.map(preset => (

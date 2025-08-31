@@ -30,6 +30,20 @@ export const EyeIcon: React.FC<{ className?: string }> = ({ className }) => (
   </svg>
 );
 
+// FIX: Added missing DownloadIcon component
+export const DownloadIcon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+    </svg>
+);
+
+// FIX: Added missing CloseIcon component
+export const CloseIcon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+    </svg>
+);
+
 export const WardrobeIcon: React.FC<{ className?: string }> = ({ className }) => (
     <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 8.25V6a2.25 2.25 0 00-2.25-2.25H9.75A2.25 2.25 0 007.5 6v2.25M16.5 8.25V18a2.25 2.25 0 01-2.25 2.25H9.75A2.25 2.25 0 017.5 18V8.25m9 0H7.5" />
